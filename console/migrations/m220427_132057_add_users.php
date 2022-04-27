@@ -2,6 +2,9 @@
 
 use yii\db\Migration;
 use domain\services\UserService;
+use domain\consts\UserStatuses;
+use domain\consts\UserRoles;
+use domain\services\RbacService;
 
 /**
  * Class m220427_132057_add_users
@@ -9,10 +12,12 @@ use domain\services\UserService;
 class m220427_132057_add_users extends Migration
 {
     private UserService $userService;
+    private RbacService $rbacService;
 
-    public function __construct(UserService $userService, $config = [])
+    public function __construct(UserService $userService, RbacService $rbacService, $config = [])
     {
         $this->userService = $userService;
+        $this->rbacService = $rbacService;
         parent::__construct($config);
     }
 
@@ -21,14 +26,14 @@ class m220427_132057_add_users extends Migration
      */
     public function safeUp()
     {
-        if(!$this->userService->getByUsername('admin'))
-        {
-            $this->userService->add([
-                'username' => 'admin',
-                'password_hash' => 'qwerty',
-                'email' => 'admin@local.te',
-            ]);
-        }
+        $user = $this->userService->add([
+            'username' => 'admin',
+            'password_hash' => 'qwerty',
+            'email' => 'admin@local.te',
+            'status' => UserStatuses::STATUS_ACTIVE
+        ]);
+
+        $this->rbacService->assign($user->id, UserRoles::ADMIN_ROLE);
     }
 
     /**
@@ -36,6 +41,9 @@ class m220427_132057_add_users extends Migration
      */
     public function safeDown()
     {
-        return false;
+        if($this->userService->getByUsername('admin'))
+        {
+            $this->userService->removeByUsername('admin');
+        }
     }
 }

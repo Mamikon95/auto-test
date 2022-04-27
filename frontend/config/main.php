@@ -14,6 +14,9 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -33,13 +36,22 @@ return [
                 ],
             ],
         ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
-        ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'api/v1/parts' => 'api/v1/parts/part',
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/v1/parts/part',
+                    'only' => ['index'],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/v1/parts/basket',
+                    'pluralize' => false,
+                    'only' => ['index', 'create'],
+                ],
             ],
         ]
     ],

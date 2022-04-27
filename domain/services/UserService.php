@@ -25,13 +25,19 @@ class UserService
 
     public function remove(int $id)
     {
-        $user = User::findOne(['id' => $id]);
+        $user = User::findOne($id);
         return $this->userRepository->remove($user);
     }
 
-    public function get(int $id)
+    public function removeByUsername(string $username)
     {
-        return $this->userRepository->get($id);
+        $user = $this->getByUsername($username);
+        return $this->userRepository->remove($user);
+    }
+
+    public function getById(int $id)
+    {
+        return $this->userRepository->getById($id);
     }
 
     public function getByUsername(string $username)

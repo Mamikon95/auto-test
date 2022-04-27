@@ -7,9 +7,11 @@ use infrastructure\repository\IUserRepository;
 
 class UserRepository implements IUserRepository
 {
-    public function add(User $user): bool
+    public function add(User $user)
     {
-        return $user->save();
+        $user->save();
+
+        return $user;
     }
 
     public function remove(User $user)
@@ -19,8 +21,7 @@ class UserRepository implements IUserRepository
 
     public function getById(int $id)
     {
-        $user = User::findOne($id);
-        return $user;
+        return User::findOne($id);
     }
 
     public function getByUsername(string $username)

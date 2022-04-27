@@ -5,7 +5,7 @@ use common\models\User;
 
 interface IUserRepository
 {
-    public function add(User $user): bool;
+    public function add(User $user);
 
     public function remove(User $user);
 

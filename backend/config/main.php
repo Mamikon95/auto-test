@@ -12,6 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'homeUrl' => ['user/index'],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
@@ -41,6 +42,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/' => 'user/index'
             ],
         ],
     ],
