@@ -5,6 +5,15 @@ return [
         '@npm'   => '@vendor/npm-asset',
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'controllerMap' => [
+        'migrate' => [
+            'class' => \yii\console\controllers\MigrateController::class,
+            'migrationPath' => [
+                '@app/migrations',
+                '@yii/rbac/migrations',
+            ]
+        ]
+    ],
     'components' => [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',

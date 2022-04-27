@@ -54,7 +54,7 @@ class BasketController extends BaseController
             throw new NotFoundHttpException();
         }
 
-        if(!$this->basketService->add($id))
+        if(!$this->basketService->add($id, yii::$app->user->id))
         {
             throw new InternalErrorException();
         }

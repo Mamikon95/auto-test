@@ -14,11 +14,13 @@ class BasketService
         $this->session = $session;
     }
 
-    public function add($id): bool
+    public function add($id, $userId): bool
     {
         if($basketData = $this->session->get(SessionKeys::BASKET_KEY))
         {
             $basketData = is_array($basketData) ? $basketData : [];
+
+            $basketData[$id][$b]
 
             if(isset($basketData[$id]))
             {
