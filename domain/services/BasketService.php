@@ -3,11 +3,8 @@
 namespace domain\services;
 
 use common\models\Basket;
-use domain\consts\SessionKeys;
 use infrastructure\repository\IBasketRepository;
 use infrastructure\repository\IPartRepository;
-use infrastructure\repository\sql\BasketRepository;
-use yii\web\Session;
 
 class BasketService
 {
