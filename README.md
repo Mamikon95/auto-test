@@ -14,4 +14,4 @@ Api information:
 - GET /api/v1/parts/basket (get full basket data for current user)
 - POST /api/v1/parts/basket?partId={partId} (send part to basket)
 
-`Auth method is Basic Auth(use user token)` <br />
+`Auth method is Basic Auth(use auth_key from user table)` <br />
