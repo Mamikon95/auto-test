@@ -9,3 +9,4 @@ Yii::setAlias('@console', dirname(dirname(__DIR__)) . '/console');
 
 Yii::$container->set(\infrastructure\repository\IUserRepository::class, \infrastructure\repository\sql\UserRepository::class);
 Yii::$container->set(\infrastructure\repository\IPartRepository::class, \infrastructure\repository\sql\PartRepository::class);
+Yii::$container->set(\infrastructure\repository\IBasketRepository::class, \infrastructure\repository\sql\BasketRepository::class);

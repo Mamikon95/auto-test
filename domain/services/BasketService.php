@@ -2,50 +2,46 @@
 
 namespace domain\services;
 
+use common\models\Basket;
 use domain\consts\SessionKeys;
+use infrastructure\repository\IBasketRepository;
+use infrastructure\repository\IPartRepository;
+use infrastructure\repository\sql\BasketRepository;
 use yii\web\Session;
 
 class BasketService
 {
-    private Session $session;
+    private IBasketRepository $basketRepository;
 
-    public function __construct(Session $session)
+    public function __construct(IBasketRepository $basketRepository, IPartRepository $partRepository)
     {
-        $this->session = $session;
+        $this->basketRepository = $basketRepository;
     }
 
-    public function add($id, $userId): bool
+    public function add(int $partId, int $userId): Basket
     {
-        if($basketData = $this->session->get(SessionKeys::BASKET_KEY))
+        $findAttrs = [
+            'part_id' => $partId,
+            'user_id' => $userId
+        ];
+
+        $basket = $this->basketRepository->getOne($findAttrs);
+
+        if(!$basket)
         {
-            $basketData = is_array($basketData) ? $basketData : [];
-
-            $basketData[$id][$b]
-
-            if(isset($basketData[$id]))
-            {
-                $basketData[$id] = ++$basketData[$id];
-            }
-            else
-            {
-                $basketData[$id] = 1;
-            }
+            $basket = new Basket($findAttrs);
+            $basket->count = 1;
+        }
+        else
+        {
+            $basket->count++;
         }
 
-        $this->session->set(SessionKeys::BASKET_KEY, $basketData);
-
-        return true;
+        return $this->basketRepository->save($basket);
     }
 
-    public function get(): array
+    public function get(array $attributes = []): array
     {
-        $basketData = [];
-
-        if($basketSession = $this->session->get(SessionKeys::BASKET_KEY))
-        {
-            $basketData = $basketSession;
-        }
-
-        return $basketData;
+        return $this->basketRepository->get($attributes);
     }
 }

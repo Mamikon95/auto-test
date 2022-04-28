@@ -2,14 +2,13 @@
 namespace infrastructure\repository;
 
 use common\models\Part;
-use common\models\User;
 use frontend\models\dto\PartDto;
 
 interface IPartRepository
 {
-    public function add(Part $user);
+    public function add(Part $part);
 
-    public function remove(Part $user);
+    public function remove(Part $part);
 
     public function getById(int $id);
 

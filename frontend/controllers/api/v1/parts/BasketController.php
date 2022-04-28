@@ -42,19 +42,21 @@ class BasketController extends BaseController
 
     public function actionIndex()
     {
-        return $this->basketService->get();
+        return $this->basketService->get([
+            'user_id' => yii::$app->user->id
+        ]);
     }
 
-    public function actionCreate(int $id)
+    public function actionCreate(int $partId)
     {
-        $partService = $this->partService->getById($id);
+        $partService = $this->partService->getById($partId);
 
         if(!$partService)
         {
             throw new NotFoundHttpException();
         }
 
-        if(!$this->basketService->add($id, yii::$app->user->id))
+        if(!$this->basketService->add($partId, yii::$app->user->id))
         {
             throw new InternalErrorException();
         }
